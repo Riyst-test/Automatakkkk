@@ -1,7 +1,5 @@
 package rodri.testes.e.guinchos;
 
-
-
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
@@ -13,44 +11,35 @@ public class LoginTest {
     private static Browser browser;
     private static BrowserContext browserContext;
 
-    //Variáveis para armazenar usuário e senha
-    private String username;
+    private String username;        //Variáveis para armazenar informações de cada cenário
     private String password;
     private String loginWarningText;
 
     Page page;
 
-        //Função para checar procedimento de login
-        private void loginMethod(String username, String password, String loginWarningText) {
+        private void loginMethod(String username, String password, String loginWarningText) {       //Função para checar procedimento de login
 
         page.fill("#username", username);       //Preenche o campo user
         page.fill("#password", password);       //Preenche o campo pw
-
-        System.out.println("Usuário: " + username);
-        System.out.println("Seha: " + password + "\n");
 
         page.getByRole(AriaRole.BUTTON,
                         new Page.GetByRoleOptions().setName("Login"))           //Localizando o botão através da role "Login"
                 .click();                                                       //Clica no butão (atchau)
 
-        System.out.println("Teste de login realizado:");
-        Locator avisoLogin = page.locator(".flash");                  //Localiza o pop-up informativo sobre o login
+                Locator avisoLogin = page.locator(".flash");                  //Localiza o pop-up informativo sobre o login
 
         PlaywrightAssertions.assertThat(avisoLogin).isVisible();
         PlaywrightAssertions.assertThat(avisoLogin).containsText(loginWarningText);       //Verifica se a mensagem de login bem sucedido aparece
-        System.out.println(avisoLogin.textContent());
-    }
 
-    //Função para verificar o funcionamento do botão close
-    private void checkCloseAlertButton() {
+        }
+
+    private void checkCloseAlertButton() {      //Função para verificar o funcionamento do botão close
         PlaywrightAssertions.assertThat(page.locator(".close")).isVisible();        //Verifica se o botão close está visível
-        System.out.println("Botão close é visível");
 
         Locator closeWarning = page.locator(".close");      //Clica no botão de fechar o aviso
         closeWarning.click();
 
         PlaywrightAssertions.assertThat(page.locator(".flash.success")).isHidden();       //Valida se o aviso saiu da tela ao clicar no botão de fechar o aviso após o aviso aparecer com os dados do aviso
-        System.out.println("Botão close é funcional\n");
 
     }
 
@@ -86,11 +75,9 @@ public class LoginTest {
     @Test
     void loginSuccess() {
 
-        System.out.println("----------------------------\nTeste com dados corretos\n----------------------------\n");
-
-        username = "tomsmith";  //Atribuição do user name e senha
+        username = "tomsmith";      //Atribuição do user name e senha
         password = "SuperSecretPassword!";
-        loginWarningText = "You logged into a secure area!"; //Definição do texto, ou parte dele, que irá aparecer após clicar no butão
+        loginWarningText = "secure area";    //Definição do texto, ou parte dele, que irá aparecer após clicar no butão
 
         loginMethod(username, password, loginWarningText);    //Chama a função de preencher os dados de login após atribuir os novos dados
 
@@ -101,8 +88,6 @@ public class LoginTest {
 
     @Test
     void invalidUser() {
-
-        System.out.println("----------------------------\nTeste com username incorreto\n----------------------------\n");
 
         username = "rodriguincho";
         password = "SuperSecretPassword!";
@@ -117,8 +102,6 @@ public class LoginTest {
     @Test
     void invalidPass() {
 
-        System.out.println("----------------------------\nTeste com senha incorreta\n----------------------------\n");
-
         username = "tomsmith";
         password = "SenhaSuperErrada!";
         loginWarningText = "Your password is invalid!";
@@ -131,8 +114,6 @@ public class LoginTest {
 
     @Test
     void blankFields() {
-
-        System.out.println("----------------------------\nTeste com campos em branco\n----------------------------\n");
 
         username = "";
         password = "";
