@@ -7,7 +7,7 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.*;
 
-public class loginTest {
+public class LoginTest {
 
     private static Playwright playwright;
     private static Browser browser;
