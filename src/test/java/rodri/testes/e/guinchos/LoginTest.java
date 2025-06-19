@@ -20,8 +20,8 @@ public class LoginTest {
 
     Page page;
 
-    //Funções para tirar a repetitividade do coDigo
-    private void loginMethod(String username, String password, String loginWarningText) {
+        //Função para checar procedimento de login
+        private void loginMethod(String username, String password, String loginWarningText) {
 
         page.fill("#username", username);       //Preenche o campo user
         page.fill("#password", password);       //Preenche o campo pw
@@ -34,13 +34,14 @@ public class LoginTest {
                 .click();                                                       //Clica no butão (atchau)
 
         System.out.println("Teste de login realizado:");
-        Locator avisoLogin = page.locator(".flash");                  //Localiza o pop-up (flash) informativo sobre o login
+        Locator avisoLogin = page.locator(".flash");                  //Localiza o pop-up informativo sobre o login
 
         PlaywrightAssertions.assertThat(avisoLogin).isVisible();
         PlaywrightAssertions.assertThat(avisoLogin).containsText(loginWarningText);       //Verifica se a mensagem de login bem sucedido aparece
         System.out.println(avisoLogin.textContent());
     }
 
+    //Função para verificar o funcionamento do botão close
     private void checkCloseAlertButton() {
         PlaywrightAssertions.assertThat(page.locator(".close")).isVisible();        //Verifica se o botão close está visível
         System.out.println("Botão close é visível");
@@ -85,7 +86,7 @@ public class LoginTest {
     @Test
     void loginSuccess() {
 
-        System.out.println("--------------------------------------------\nInicializando teste com dados corretos\n--------------------------------------------\n");
+        System.out.println("----------------------------\nTeste com dados corretos\n----------------------------\n");
 
         username = "tomsmith";  //Atribuição do user name e senha
         password = "SuperSecretPassword!";
@@ -101,7 +102,7 @@ public class LoginTest {
     @Test
     void invalidUser() {
 
-        System.out.println("--------------------------------------------\nInicializando teste com username incorreto\n--------------------------------------------\n");
+        System.out.println("----------------------------\nTeste com username incorreto\n----------------------------\n");
 
         username = "rodriguincho";
         password = "SuperSecretPassword!";
@@ -116,7 +117,7 @@ public class LoginTest {
     @Test
     void invalidPass() {
 
-        System.out.println("--------------------------------------------\nInicializando teste com senha incorreta\n--------------------------------------------\n");
+        System.out.println("----------------------------\nTeste com senha incorreta\n----------------------------\n");
 
         username = "tomsmith";
         password = "SenhaSuperErrada!";
@@ -131,7 +132,7 @@ public class LoginTest {
     @Test
     void blankFields() {
 
-        System.out.println("--------------------------------------------\nInicializando teste com campos em branco\n--------------------------------------------\n");
+        System.out.println("----------------------------\nTeste com campos em branco\n----------------------------\n");
 
         username = "";
         password = "";
